@@ -17,4 +17,16 @@ def validate_hmac(hmac_value,hmac_body):
         return Response(status=500)  # Internal Server Error if HMAC generation fails
     print("hmac:",hmac_value)
     print("generated_hmac: ",generated_hmac)
-    
+    if hmac_value == generated_hmac:        
+        validation_response=Response(status=200)
+    else:
+        validation_response = Response(status=401)
+        logger.info(f'Validation was not successfull,Response code: {validation_response.status_code}')
+
+    return validation_response
+
+# Set environment variables for local testing
+# def get_secret():
+#     secret_name = os.getenv('SECRET_NAME')
+#     return secret_name
+
